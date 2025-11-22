@@ -40,9 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 // Login bem sucedido
                 // Normalmente pegaria dados do DB e guardaria o id do usuário na sessão
-                $_SESSION['user'] = [
+                $_SESSION['usuario'] = [
                     'email' => $email,
-                    'logged_at' => time()
+                    'logged_at' => time(),
+                    'nm_usuario' => "Henrique"
                 ];
 
 
@@ -50,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 session_regenerate_id(true);
 
                 // Redireciona para painel
-                header('Location: painel.php');
+                header('Location: index.php');
                 exit;
             }
         }
@@ -150,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
