@@ -1,14 +1,9 @@
 <?php
 
 session_start();
-// Função que retorna usuários de exemplo (substitua por consulta ao banco)
-function get_test_users(): array
-{
-    return [
-        'admin@exemplo.com' => password_hash('senha123', PASSWORD_DEFAULT),
-        'cliente@exemplo.com' => password_hash('cliente123', PASSWORD_DEFAULT),
-    ];
-}
+
+require "classes/classe_conexao.php";
+$db = new Database();
 
 $errors = [];
 $email = '';
@@ -20,44 +15,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = filter_input(INPUT_POST, 'password', FILTER_UNSAFE_RAW);
 
     if (!$email) {
-        $errors[] = 'Informe um e‑mail válido.';
+        $errors[] = 'Informe um e-mail válido.';
     }
     if (!$password) {
         $errors[] = 'Informe a senha.';
     }
 
-
-    // Se sem erros, valida usuário
+    // Validação via banco
     if (empty($errors)) {
-        $users = get_test_users();
 
-        if (!array_key_exists($email, $users)) {
+        // Consulta o usuário pelo e-mail
+        $usuario = $db->getRegistro("SELECT id_usuario, nm_usuario, nm_email, senha FROM tb_usuarios WHERE nm_email = :email LIMIT 1",[":email" => $email]);
+
+        if (!$usuario) {
             $errors[] = 'Usuário ou senha inválidos.';
         } else {
-            $hash = $users[$email];
-            if (!password_verify($password, $hash)) {
+
+            // Verifica o hash da senha
+            if ($password != $usuario['senha']) {
                 $errors[] = 'Usuário ou senha inválidos.';
             } else {
+
                 // Login bem sucedido
-                // Normalmente pegaria dados do DB e guardaria o id do usuário na sessão
                 $_SESSION['usuario'] = [
-                    'email' => $email,
-                    'logged_at' => time(),
-                    'nm_usuario' => "Henrique"
+                    'id'        => $usuario['id_usuario'],
+                    'email'     => $usuario['nm_email'],
+                    'nm_usuario'=> $usuario['nm_usuario'],
+                    'logged_at' => time()
                 ];
 
-
-                // Regenerar token de sessão por segurança
+                // Segurança extra
                 session_regenerate_id(true);
 
-                // Redireciona para painel
                 header('Location: index.php');
                 exit;
             }
         }
     }
 }
-;
 
 // HTML abaixo - usa Bootstrap CDN para estilo simples
 ?>

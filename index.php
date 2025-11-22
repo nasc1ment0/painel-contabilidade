@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+require "classes/classe_conexao.php";
+$db = new Database(); 
+
 if (!isset($_SESSION['usuario'])) {
     exit("<script>alert('Faça login no sistema!'); location='login.php'</script>");
 }
