@@ -18,6 +18,7 @@ $usuario = $_SESSION['usuario']['nm_usuario'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Sistema</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
 
     <style>
         body {
@@ -68,10 +69,10 @@ $usuario = $_SESSION['usuario']['nm_usuario'];
 
     <div class="sidebar">
         <h4 class="text-center text-light mb-4">MENU</h4>
-        <a href="#">🏠 Dashboard</a>
-        <a href="#">📁 Arquivos</a>
-        <a href="#">⚙️ Configurações</a>
-        <a href="#">❓ Ajuda</a>
+        <a href="#"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        <a href="#"><i class="fa-regular fa-user"></i> Cadastros</a>
+        <a href="#"><i class="fa-regular fa-folder-open"></i> Arquivos</a>
+        <a href="#"><i class="fa-regular fa-circle-question"></i> Ajuda</a>
     </div>
 
     <div class="content">
