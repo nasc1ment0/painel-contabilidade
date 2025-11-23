@@ -20,167 +20,7 @@ $usuario = $_SESSION['usuario']['nm_usuario'];
     <title>Painel do Sistema</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
-
-    <style>
-        body {
-            background-color: #f5f5f5;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            background: linear-gradient(to bottom, #2c3e50, #34495e);
-            padding-top: 20px;
-            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-            z-index: 1000;
-        }
-
-        .sidebar-header {
-            padding: 0 20px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 10px;
-        }
-
-        .sidebar a {
-            color: #ecf0f1;
-            font-size: 15px;
-            padding: 12px 20px;
-            display: block;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .sidebar a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-
-        .sidebar a i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-        }
-
-        .sidebar .menu-item {
-            position: relative;
-        }
-
-        .sidebar-footer {
-            margin-top: auto;
-            padding: 15px 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .sidebar-footer .btn {
-            font-size: 14px;
-            padding: 8px 12px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar-footer .btn:hover {
-            background-color: rgba(255,255,255,0.1);
-            transform: translateY(-1px);
-        }
-
-        .submenu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-            background-color: rgba(0, 0, 0, 0.2);
-        }
-
-        .submenu.show {
-            max-height: 300px;
-        }
-
-        .submenu a {
-            padding-left: 50px;
-            font-size: 14px;
-            background-color: transparent;
-        }
-
-        .submenu a:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-            transition: margin-left 0.3s;
-        }
-
-        .topbar {
-            background: #fff;
-            padding: 15px 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .page-title {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .card {
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border: none;
-            margin-bottom: 20px;
-        }
-
-        .card-header {
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #eee;
-            font-weight: 600;
-        }
-
-        .logo {
-            width: 150px;
-            margin: 0 auto;
-            border-radius: 12px;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 70px;
-                overflow: hidden;
-            }
-
-            .sidebar .menu-text,
-            .sidebar-header h4 {
-                display: none;
-            }
-
-            .sidebar .menu-item.has-submenu::after {
-                display: none;
-            }
-
-            .sidebar a i {
-                margin-right: 0;
-                font-size: 18px;
-            }
-
-            .content {
-                margin-left: 70px;
-            }
-
-            .submenu a {
-                padding-left: 20px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -189,7 +29,7 @@ $usuario = $_SESSION['usuario']['nm_usuario'];
         <div class="sidebar-header">
             <h6 class="text-center text-light mb-0">
                 <img src="imagens/logo-empresa.png" alt="" class="logo">
-                <p style="margin-top:10px">Bem vindo, <?php echo$usuario?>!</p>
+                <p style="margin-top:10px">Bem vindo, <?php echo $usuario ?>!</p>
             </h6>
         </div>
 
@@ -237,39 +77,59 @@ $usuario = $_SESSION['usuario']['nm_usuario'];
         <h3 class="page-title">Painel Inicial</h3>
 
         <div class="row">
+            <!-- Gráfico de Linha - Uploads Mensais -->
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <i class="fas fa-chart-bar"></i> Estatísticas Rápidas
+                        <i class="fas fa-chart-line"></i> Uploads Mensais
                     </div>
                     <div class="card-body">
-                        <p>Conteúdo do painel vai aqui...</p>
-                        <ul>
-                            <li>Usuários cadastrados: 15</li>
-                            <li>Arquivos disponíveis: 42</li>
-                            <li>Downloads realizados: 128</li>
-                        </ul>
+                        <canvas id="uploadsChart" height="120"></canvas>
                     </div>
                 </div>
             </div>
 
+            <!-- Gráfico de Pizza - Tipos de Arquivo -->
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <i class="fas fa-clock"></i> Atividades Recentes
+                        <i class="fas fa-chart-bar"></i> Tipos de Arquivo Mais Usados
                     </div>
                     <div class="card-body">
-                        <p>Últimas atividades do sistema...</p>
-                        <ul>
-                            <li>Novo usuário cadastrado - 2 horas atrás</li>
-                            <li>Arquivo enviado - 5 horas atrás</li>
-                            <li>Download realizado - 1 dia atrás</li>
-                        </ul>
+                        <canvas id="fileTypesChart" height="120"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Gráfico de Barras - Atividades por Usuário -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar"></i> Atividades por Usuário
+                    </div>
+                    <div class="card-body">
+                        <canvas id="userActivityChart" height="120"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico de Área - Uploads vs Downloads -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-area"></i> Uploads vs Downloads
+                    </div>
+                    <div class="card-body">
+                        <canvas id="comparisonChart" height="120"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -308,6 +168,75 @@ $usuario = $_SESSION['usuario']['nm_usuario'];
                             submenu.classList.remove('show');
                         });
                     }
+                }
+            });
+
+            // Gráfico de Downloads Mensais
+            new Chart(document.getElementById('uploadsChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                    datasets: [{
+                        label: 'Uploads',
+                        data: [65, 59, 80, 81, 56, 55],
+                        borderColor: '#3498db',
+                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                }
+            });
+
+            // Gráfico de Tipos de Arquivo
+            new Chart(document.getElementById('fileTypesChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['PDF', 'Imagens', 'Documentos', 'Planilhas', 'Apresentações'],
+                    datasets: [{
+                        label: 'Quantidade',
+                        data: [45, 30, 25, 15, 10],
+                        backgroundColor: ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6']
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // Isso faz as barras ficarem horizontais
+                }
+            });
+
+            // Gráfico de Atividades por Usuário
+            new Chart(document.getElementById('userActivityChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Admin', 'João', 'Maria', 'Pedro', 'Ana'],
+                    datasets: [{
+                        label: 'Atividades',
+                        data: [45, 30, 25, 20, 15],
+                        backgroundColor: '#2ecc71'
+                    }]
+                }
+            });
+
+            // Gráfico de Comparação Uploads vs Downloads
+            new Chart(document.getElementById('comparisonChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
+                    datasets: [
+                        {
+                            label: 'Uploads',
+                            data: [12, 19, 8, 15, 10],
+                            borderColor: '#e74c3c',
+                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                            fill: true
+                        },
+                        {
+                            label: 'Downloads',
+                            data: [25, 30, 22, 28, 35],
+                            borderColor: '#3498db',
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            fill: true
+                        }
+                    ]
                 }
             });
         });
