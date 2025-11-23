@@ -9,6 +9,24 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 $usuario = $_SESSION['usuario']['nm_usuario'];
+
+// Sistema de rotas
+$rotina = isset($_GET['rotina']) ? (int) $_GET['rotina'] : 0;
+$mod = isset($_GET['mod']) ? (int) $_GET['mod'] : 0;
+
+// Definir título da página baseado na rotina
+$titulos = [
+    0 => 'Painel Inicial',
+    1 => 'Tipos de Acesso',
+    2 => 'Usuários',
+    3 => 'Clientes',
+    4 => 'Download de Arquivos',
+    5 => 'Upload de Arquivos',
+    6 => 'Informações do Sistema',
+    7 => 'Contatos'
+];
+
+$page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +51,7 @@ $usuario = $_SESSION['usuario']['nm_usuario'];
             </h6>
         </div>
 
-        <a href="#" class="menu-item">
+        <a href="index.php" class="menu-item">
             <i class="fas fa-chart-line"></i>
             <span class="menu-text">Dashboard</span>
         </a>
@@ -43,7 +61,7 @@ $usuario = $_SESSION['usuario']['nm_usuario'];
             <span class="menu-text">Cadastros</span>
         </a>
         <div class="submenu" id="cadastros-submenu">
-            <a href="#"><i class="fas fa-key"></i> Tipos de acesso</a>
+            <a href="index.php?rotina=1&mod=0"><i class="fas fa-key"></i> Tipos de acesso</a>
             <a href="#"><i class="fas fa-users"></i> Usuários</a>
             <a href="#"><i class="fas fa-user-tie"></i> Clientes</a>
         </div>
@@ -74,59 +92,67 @@ $usuario = $_SESSION['usuario']['nm_usuario'];
     </div>
 
     <div class="content">
-        <h3 class="page-title">Painel Inicial</h3>
+        <h3 class="page-title"><?php echo $page_title; ?></h3>
+        <?php
+        // Sistema de carregamento de rotinas
+        switch ($rotina) {
+            case 0: // Dashboard
+                include('dashboard.php');
+            break;
 
-        <div class="row">
-            <!-- Gráfico de Linha - Uploads Mensais -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <i class="fas fa-chart-line"></i> Uploads Mensais
-                    </div>
-                    <div class="card-body">
-                        <canvas id="uploadsChart" height="120"></canvas>
-                    </div>
-                </div>
-            </div>
+            case 1: // Tipos de acesso
+                if ($mod == 0) {
+                    include('cadastros/acessos/index.php');
+                } elseif ($mod == 1) {
+                    include('cadastros/acessos/cadastro.php');
+                } elseif ($mod == 2) {
+                    include('rotinas/acessos/editar.php');
+                }
+            break;
 
-            <!-- Gráfico de Pizza - Tipos de Arquivo -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <i class="fas fa-chart-bar"></i> Tipos de Arquivo Mais Usados
-                    </div>
-                    <div class="card-body">
-                        <canvas id="fileTypesChart" height="120"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
+            case 2: // Usuários
+                if ($mod == 0) {
+                    include('rotinas/usuarios/index.php');
+                } elseif ($mod == 1) {
+                    include('rotinas/usuarios/novo.php');
+                }
+            break;
 
-        <div class="row mt-4">
-            <!-- Gráfico de Barras - Atividades por Usuário -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <i class="fas fa-chart-bar"></i> Atividades por Usuário
-                    </div>
-                    <div class="card-body">
-                        <canvas id="userActivityChart" height="120"></canvas>
-                    </div>
-                </div>
-            </div>
+            case 3: // Clientes
+                if ($mod == 0) {
+                    include('rotinas/clientes/index.php');
+                }
+            break;
 
-            <!-- Gráfico de Área - Uploads vs Downloads -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <i class="fas fa-chart-area"></i> Uploads vs Downloads
-                    </div>
-                    <div class="card-body">
-                        <canvas id="comparisonChart" height="120"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
+            case 4: // Download
+                if ($mod == 0) {
+                    include('rotinas/arquivos/download.php');
+                }
+            break;
+
+            case 5: // Upload
+                if ($mod == 0) {
+                    include('rotinas/arquivos/upload.php');
+                }
+            break;
+
+            case 6: // Informações
+                if ($mod == 0) {
+                    include('rotinas/ajuda/informacoes.php');
+                }
+            break;
+
+            case 7: // Contatos
+                if ($mod == 0) {
+                    include('rotinas/ajuda/contatos.php');
+                }
+            break;
+
+            default: // Dashboard padrão
+                include('rotinas/dashboard.php');
+            break;
+        }
+        ?>
     </div>
 
     <script src="js/chart.js"></script>
@@ -168,75 +194,6 @@ $usuario = $_SESSION['usuario']['nm_usuario'];
                             submenu.classList.remove('show');
                         });
                     }
-                }
-            });
-
-            // Gráfico de Downloads Mensais
-            new Chart(document.getElementById('uploadsChart'), {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-                    datasets: [{
-                        label: 'Uploads',
-                        data: [65, 59, 80, 81, 56, 55],
-                        borderColor: '#3498db',
-                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }]
-                }
-            });
-
-            // Gráfico de Tipos de Arquivo
-            new Chart(document.getElementById('fileTypesChart'), {
-                type: 'bar',
-                data: {
-                    labels: ['PDF', 'Imagens', 'Documentos', 'Planilhas', 'Apresentações'],
-                    datasets: [{
-                        label: 'Quantidade',
-                        data: [45, 30, 25, 15, 10],
-                        backgroundColor: ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6']
-                    }]
-                },
-                options: {
-                    indexAxis: 'y', // Isso faz as barras ficarem horizontais
-                }
-            });
-
-            // Gráfico de Atividades por Usuário
-            new Chart(document.getElementById('userActivityChart'), {
-                type: 'bar',
-                data: {
-                    labels: ['Admin', 'João', 'Maria', 'Pedro', 'Ana'],
-                    datasets: [{
-                        label: 'Atividades',
-                        data: [45, 30, 25, 20, 15],
-                        backgroundColor: '#2ecc71'
-                    }]
-                }
-            });
-
-            // Gráfico de Comparação Uploads vs Downloads
-            new Chart(document.getElementById('comparisonChart'), {
-                type: 'line',
-                data: {
-                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'],
-                    datasets: [
-                        {
-                            label: 'Uploads',
-                            data: [12, 19, 8, 15, 10],
-                            borderColor: '#e74c3c',
-                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                            fill: true
-                        },
-                        {
-                            label: 'Downloads',
-                            data: [25, 30, 22, 28, 35],
-                            borderColor: '#3498db',
-                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                            fill: true
-                        }
-                    ]
                 }
             });
         });
