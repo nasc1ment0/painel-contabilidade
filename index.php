@@ -129,7 +129,7 @@ $usuario = $_SESSION['usuario']['nm_usuario'];
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/chart.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
