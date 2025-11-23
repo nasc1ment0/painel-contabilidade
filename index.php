@@ -39,6 +39,7 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
 </head>
 
 <body>
@@ -98,17 +99,19 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
         switch ($rotina) {
             case 0: // Dashboard
                 include('dashboard.php');
-            break;
+                break;
 
             case 1: // Tipos de acesso
                 if ($mod == 0) {
                     include('cadastros/acessos/index.php');
                 } elseif ($mod == 1) {
                     include('cadastros/acessos/cadastro.php');
-                } elseif ($mod == 2) {
-                    include('rotinas/acessos/editar.php');
+                }elseif ($mod == 2) {
+                    include('cadastros/acessos/salvar.php');
+                }elseif ($mod == 3) {
+                    include('cadastros/acessos/inativa_cad.php');
                 }
-            break;
+                break;
 
             case 2: // Usuários
                 if ($mod == 0) {
@@ -116,47 +119,54 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
                 } elseif ($mod == 1) {
                     include('rotinas/usuarios/novo.php');
                 }
-            break;
+                break;
 
             case 3: // Clientes
                 if ($mod == 0) {
                     include('rotinas/clientes/index.php');
                 }
-            break;
+                break;
 
             case 4: // Download
                 if ($mod == 0) {
                     include('rotinas/arquivos/download.php');
                 }
-            break;
+                break;
 
             case 5: // Upload
                 if ($mod == 0) {
                     include('rotinas/arquivos/upload.php');
                 }
-            break;
+                break;
 
             case 6: // Informações
                 if ($mod == 0) {
                     include('rotinas/ajuda/informacoes.php');
                 }
-            break;
+                break;
 
             case 7: // Contatos
                 if ($mod == 0) {
                     include('rotinas/ajuda/contatos.php');
                 }
-            break;
+                break;
 
             default: // Dashboard padrão
                 include('rotinas/dashboard.php');
-            break;
+                break;
         }
         ?>
     </div>
 
+    <!-- Gráficos -->
     <script src="js/chart.js"></script>
 
+    <!-- Datatable -->
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- Script pro submenu -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Adicionar evento de clique para os itens de menu com submenu
