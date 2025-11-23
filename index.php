@@ -3,6 +3,7 @@ session_start();
 
 require "classes/classe_conexao.php";
 $db = new Database();
+require "funcoes/funcoes.php";
 
 if (!isset($_SESSION['usuario'])) {
     exit("<script>alert('Faça login no sistema!'); location='login.php'</script>");
@@ -63,7 +64,7 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
         </a>
         <div class="submenu" id="cadastros-submenu">
             <a href="index.php?rotina=1&mod=0"><i class="fas fa-key"></i> Tipos de acesso</a>
-            <a href="#"><i class="fas fa-users"></i> Usuários</a>
+            <a href="index.php?rotina=2&mod=0"><i class="fas fa-users"></i> Usuários</a>
             <a href="#"><i class="fas fa-user-tie"></i> Clientes</a>
         </div>
 
@@ -115,9 +116,13 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
 
             case 2: // Usuários
                 if ($mod == 0) {
-                    include('rotinas/usuarios/index.php');
-                } elseif ($mod == 1) {
-                    include('rotinas/usuarios/novo.php');
+                    include('cadastros/usuarios/index.php');
+                }elseif ($mod == 1) {
+                    include('cadastros/usuarios/cadastro.php');
+                }elseif($mod == 2){
+                    include('cadastros/usuarios/salvar.php');
+                }elseif ($mod == 3) {
+                    include('cadastros/usuarios/inativa_cad.php');
                 }
                 break;
 
