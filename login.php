@@ -65,9 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login — Painel de Arquivos</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <style>
         body {
-            background: linear-gradient(180deg, #f8fafc, #eef2f6);
+            background: linear-gradient(180deg, #0A4B73, #eef2f6);
             font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
         }
 
@@ -77,8 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .logo {
-            font-weight: 700;
-            letter-spacing: -0.02em;
+            width: 200px;
+            margin: 0 auto;
+            border-radius: 12px;
         }
     </style>
 </head>
@@ -88,11 +90,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
                 <div class="text-center mb-4">
-                    <h1 class="logo">Painel - Contabilidade</h1>
+                    
                 </div>
 
 
                 <div class="card p-4">
+                    <img src="imagens/logo-empresa.png" alt="" class="logo">
+                    <br>
                     <?php if (!empty($errors)): ?>
                         <div class="alert alert-danger">
                             <ul class="mb-0">
@@ -105,19 +109,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
                     <form method="POST" novalidate>
-                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
-
-
                         <div class="mb-3">
+                            <i class="fa-regular fa-envelope"></i>
                             <label for="email" class="form-label">E‑mail</label>
-                            <input id="email" name="email" type="email" class="form-control"
+                            <input id="email" placeholder="Digite seu email" name="email" type="email" class="form-control"
                                 value="<?= htmlspecialchars($email) ?>" required>
                         </div>
 
 
                         <div class="mb-3">
+                            <i class="fa-solid fa-lock"></i>
                             <label for="password" class="form-label">Senha</label>
-                            <input id="password" name="password" type="password" class="form-control" required>
+                            <input id="password" placeholder="Digite sua senha" name="password" type="password" class="form-control" required>
                         </div>
 
 
@@ -135,13 +138,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
                     <hr class="my-3">
-                    <div class="text-center small text-muted">Usuários de teste: admin@exemplo.com / senha123 •
-                        cliente@exemplo.com / cliente123</div>
+                    <div class="text-center small text-muted">Contato para ter acesso ao painel</div>
+                    <div class="text-center small text-muted">Email: teste@gmail.com // Telefone: 11 99999-9999</div>
+                    <div class="text-center small text-muted">© 2025 Vista Consultoria contábil.</div>
                 </div>
-
-
-                <p class="text-center text-muted mt-3 small">Feito para testes locais — substitua a lógica por consultas
-                    ao banco e HTTPS em produção.</p>
             </div>
         </div>
     </div>
