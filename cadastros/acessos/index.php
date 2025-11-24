@@ -12,7 +12,7 @@ $acessos = $db->getRegistros("SELECT id_tp_acesso, ds_tp_acesso, ativo FROM tb_t
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-striped table-hover" id="tabelaAcessos">
+            <table class="table table-striped table-hover" id="tablePadrao">
                 <thead class="table-dark">
                     <tr>
                         <th width="80">ID</th>

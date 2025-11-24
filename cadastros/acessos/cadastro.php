@@ -75,7 +75,7 @@ $id_acesso = $db->getRegistro("SELECT*FROM tb_tp_acessos WHERE id_tp_acesso = :i
                             <i class="fas fa-arrow-left"></i> Voltar
                         </a>
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i> Salvar Tipo de Acesso
+                            <i class="fas fa-save"></i> <?= $id == 0 ? "Salvar Tipo de Acesso" : "Alterar Tipo de Acesso"?>
                         </button>
                     </div>
                 </div>

@@ -31,12 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors[] = 'Usuário ou senha inválidos.';
         } else {
 
-            // Verifica o hash da senha
-            if ($password != $usuario['senha']) {
-                $errors[] = 'Usuário ou senha inválidos.';
-            } else {
-
-                // Login bem sucedido
+            if (password_verify($password, $usuario["senha"])) {
                 $_SESSION['usuario'] = [
                     'id'        => $usuario['id_usuario'],
                     'email'     => $usuario['nm_email'],
@@ -46,9 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Segurança extra
                 session_regenerate_id(true);
-
                 header('Location: index.php');
                 exit;
+            } else {
+                $errors[] = 'Usuário ou senha inválidos.';
             }
         }
     }
@@ -69,7 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         body {
             background: linear-gradient(180deg, #0A4B73, #eef2f6);
+            background-attachment: fixed; /* ← ADICIONE ESTA LINHA */
+            background-repeat: no-repeat; /* ← E ESTA */
             font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            overflow: hidden;
+            height: 100vh;
         }
 
         .card {
@@ -81,22 +81,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 200px;
             margin: 0 auto;
             border-radius: 12px;
+            margin-bottom:10px
         }
     </style>
 </head>
 
 <body>
-    <div class="container py-5">
+    <div class="container py-6">
+        <br>
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
-                <div class="text-center mb-4">
-                    
-                </div>
-
-
+            <div class="col-md-7 col-lg-5">
                 <div class="card p-4">
                     <img src="imagens/logo-empresa.png" alt="" class="logo">
-                    <br>
                     <?php if (!empty($errors)): ?>
                         <div class="alert alert-danger">
                             <ul class="mb-0">
@@ -138,8 +134,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
                     <hr class="my-3">
-                    <div class="text-center small text-muted">Contato para ter acesso ao painel</div>
-                    <div class="text-center small text-muted">Email: teste@gmail.com // Telefone: 11 99999-9999</div>
                     <div class="text-center small text-muted">© 2025 Vista Consultoria contábil.</div>
                 </div>
             </div>
