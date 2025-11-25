@@ -128,7 +128,7 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
 
             case 3: // Clientes
                 if ($mod == 0) {
-                    include('rotinas/clientes/index.php');
+                    include('cadastros/clientes/index.php');
                 }
                 break;
 
