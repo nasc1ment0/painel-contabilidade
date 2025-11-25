@@ -100,7 +100,7 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
         switch ($rotina) {
             case 0: // Dashboard
                 include('dashboard.php');
-                break;
+            break;
 
             case 1: // Tipos de acesso
                 if ($mod == 0) {
@@ -112,7 +112,7 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
                 }elseif ($mod == 3) {
                     include('cadastros/acessos/inativa_cad.php');
                 }
-                break;
+            break;
 
             case 2: // Usuários
                 if ($mod == 0) {
@@ -129,8 +129,14 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
             case 3: // Clientes
                 if ($mod == 0) {
                     include('cadastros/clientes/index.php');
+                }elseif ($mod == 1) {
+                    include('cadastros/clientes/cadastro.php');
+                }elseif ($mod == 2) {
+                    include('cadastros/clientes/salvar.php');
+                }elseif ($mod == 3) {
+                    include('cadastros/clientes/inativa_cad.php');
                 }
-                break;
+            break;
 
             case 4: // Download
                 if ($mod == 0) {
@@ -170,6 +176,9 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- Mascáras JS -->
+    <script src="js/masks.js"></script>
 
     <!-- Script pro submenu -->
     <script>
