@@ -65,7 +65,7 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
         <div class="submenu" id="cadastros-submenu">
             <a href="index.php?rotina=1&mod=0"><i class="fas fa-key"></i> Tipos de acesso</a>
             <a href="index.php?rotina=2&mod=0"><i class="fas fa-users"></i> Usuários</a>
-            <a href="#"><i class="fas fa-user-tie"></i> Clientes</a>
+            <a href="index.php?rotina=3&mod=0"><i class="fas fa-user-tie"></i> Clientes</a>
         </div>
 
         <a href="#" class="menu-item has-submenu" id="arquivos-menu">
