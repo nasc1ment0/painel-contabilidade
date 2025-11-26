@@ -1,4 +1,10 @@
 <?php
+require_once __DIR__ . "/../vendor/autoload.php";
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . "/../");
+$dotenv->load();
 
 class Database
 {
@@ -6,10 +12,10 @@ class Database
 
     public function __construct()
     {
-        $host = "localhost";
-        $usuario = "root";
-        $senha = "";
-        $banco = "painel_contabilidade";
+        $host     = $_ENV['DB_HOST'];
+        $usuario  = $_ENV['DB_USER'];
+        $senha    = $_ENV['DB_PASS'];
+        $banco    = $_ENV['DB_NAME'];
 
         try {
             $this->pdo = new PDO("mysql:host=$host;dbname=$banco;charset=utf8", $usuario, $senha);
