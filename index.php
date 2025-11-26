@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-require "classes/classe_conexao.php";
-$db = new Database();
+//require "classes/classe_conexao.php";
+//$db = new Database();
 require "funcoes/funcoes.php";
 
 if (!isset($_SESSION['usuario'])) {

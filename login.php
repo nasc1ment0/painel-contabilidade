@@ -2,9 +2,6 @@
 
 session_start();
 
-require "classes/classe_conexao.php";
-$db = new Database();
-
 $errors = [];
 $email = '';
 
@@ -21,30 +18,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Informe a senha.';
     }
 
-    // Validação via banco
+    // Se sem erros, valida usuário de teste
     if (empty($errors)) {
 
-        // Consulta o usuário pelo e-mail
-        $usuario = $db->getRegistro("SELECT id_usuario, nm_usuario, nm_email, senha FROM tb_usuarios WHERE nm_email = :email LIMIT 1",[":email" => $email]);
+        // Usuários de teste
+        $users = [
+            'admin@exemplo.com'   => password_hash('senha123', PASSWORD_DEFAULT),
+            'cliente@exemplo.com' => password_hash('cliente123', PASSWORD_DEFAULT),
+            'teste@exemplo.com'   => password_hash('teste123', PASSWORD_DEFAULT)
+        ];
 
-        if (!$usuario) {
+        if (!array_key_exists($email, $users)) {
             $errors[] = 'Usuário ou senha inválidos.';
         } else {
 
-            if (password_verify($password, $usuario["senha"])) {
+            $hash = $users[$email];
+
+            if (!password_verify($password, $hash)) {
+                $errors[] = 'Usuário ou senha inválidos.';
+            } else {
+
+                // Login bem sucedido
                 $_SESSION['usuario'] = [
-                    'id'        => $usuario['id_usuario'],
-                    'email'     => $usuario['nm_email'],
-                    'nm_usuario'=> $usuario['nm_usuario'],
+                    'email'     => $email,
+                    'nm_usuario'=> 'Usuário Teste',
                     'logged_at' => time()
                 ];
 
                 // Segurança extra
                 session_regenerate_id(true);
+
+                // Redireciona para painel
                 header('Location: index.php');
                 exit;
-            } else {
-                $errors[] = 'Usuário ou senha inválidos.';
             }
         }
     }
