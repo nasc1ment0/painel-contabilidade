@@ -10,6 +10,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 $usuario = $_SESSION['usuario']['nm_usuario'];
+$id_usuario = $_SESSION['usuario']['id'];
 
 // Sistema de rotas
 $rotina = isset($_GET['rotina']) ? (int) $_GET['rotina'] : 0;
@@ -22,7 +23,7 @@ $titulos = [
     2 => 'Usuários',
     3 => 'Clientes',
     4 => 'Download de Arquivos',
-    5 => 'Upload de Arquivos',
+    5 => 'Envio de Arquivos',
     6 => 'Informações do Sistema',
     7 => 'Contatos'
 ];
@@ -148,6 +149,8 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
             case 5: // Upload
                 if ($mod == 0) {
                     include('arquivos/upload/index.php');
+                }elseif($mod == 1) {
+                    include('arquivos/upload/processa_arquivos.php');
                 }
                 break;
 
