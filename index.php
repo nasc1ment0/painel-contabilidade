@@ -73,8 +73,8 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
             <span class="menu-text">Arquivos</span>
         </a>
         <div class="submenu" id="arquivos-submenu">
-            <a href="#"><i class="fas fa-download"></i> Download</a>
-            <a href="#"><i class="fas fa-upload"></i> Upload</a>
+            <a href="index.php?rotina=4&mod=0"><i class="fas fa-download"></i> Download</a>
+            <a href="index.php?rotina=5&mod=0"><i class="fas fa-upload"></i> Upload</a>
         </div>
 
         <a href="#" class="menu-item has-submenu" id="ajuda-menu">
@@ -146,7 +146,7 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
 
             case 5: // Upload
                 if ($mod == 0) {
-                    include('rotinas/arquivos/upload.php');
+                    include('arquivos/upload/index.php');
                 }
                 break;
 
