@@ -41,6 +41,7 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
+    <script src="js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -173,9 +174,12 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
     <script src="js/chart.js"></script>
 
     <!-- Datatable -->
-    <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- Autocomplete UI -->
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <script src="js/jquery-ui.js"></script>
 
     <!-- Mascáras JS -->
     <script src="js/masks.js"></script>
