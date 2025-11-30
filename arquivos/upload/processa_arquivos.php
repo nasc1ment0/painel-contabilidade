@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $arquivos = $_FILES['arquivos'] ?? [];
 
     // Verificar se cliente existe
-    $cliente = $db->getRegistro("SELECT id_cliente, nm_cliente FROM tb_clientes WHERE id_cliente = :id",[":id" => $id_cliente]);
+    $cliente = $db->getRegistro("SELECT id_cliente, nm_cliente, email FROM tb_clientes WHERE id_cliente = :id",[":id" => $id_cliente]);
 
     if (!$cliente) {
         throw new Exception("Cliente não encontrado");
@@ -51,6 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $db->incluir("tb_uploads", $dados);
 
+            $arquivosSalvos[] = [
+                'nome' => $nomeArquivo,
+                'caminho' => $caminhoCompleto
+            ];
+
         } else {
             $uploadsErro[] = $arquivos['name'][$i] . " - Erro ao salvar arquivo";
         }
@@ -68,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['mensagem'] = $mensagem ?: "Nenhum arquivo processado";
     $_SESSION['tipo_mensagem'] = empty($uploadsErro) ? 'success' : 'warning';
 
+    require("envio_email.php");
     // Redirecionar de volta para o formulário
     header("Location: index.php?rotina=5&mod=0");
     exit;
