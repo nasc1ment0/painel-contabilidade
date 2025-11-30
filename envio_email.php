@@ -22,7 +22,7 @@ try {
     $mail->Charset = "UTF-8";
 
     // Remetente e destino
-    $mail->setFrom($_ENV['EMAIL_TESTE'], 'Painel Contabilidade (Teste)');
+    $mail->setFrom($_ENV['EMAIL_TESTE'], 'Painel Contabilidade Vista');
     $mail->addAddress($cliente['email'], nm_cliente($id_cliente));
 
     // Conteúdo
@@ -35,8 +35,26 @@ try {
         $mail->addAttachment($arquivo['caminho'], $arquivo['nome']);
     }
     $mail->send();
-    echo "Email enviado com sucesso! 🎉";
+    echo "Email enviado com sucesso!";
+
+    $dados = [];
+    $dados["remetente"] = $_ENV['EMAIL_TESTE'];
+    $dados["destinatario"] = $cliente['email'];
+    $dados["body_email"] = $mail->Body;
+    $dados["dt_log"] = date("Y-m-d H:i:s");
+    $dados["retorno"] = "Email enviado com sucesso!";
+
+    $db->incluir("log_emails", $dados);
 
 } catch (Exception $e) {
     echo "Erro ao enviar email: {$mail->ErrorInfo}";
+
+    $dados = [];
+    $dados["remetente"] = $_ENV['EMAIL_TESTE'];
+    $dados["destinatario"] = $cliente['email'];
+    $dados["body_email"] = $mail->Body;
+    $dados["dt_log"] = date("Y-m-d H:i:s");
+    $dados["retorno"] = $mail->ErrorInfo;
+
+    $db->incluir("log_emails", $dados);
 }

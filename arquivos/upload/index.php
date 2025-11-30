@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-success w-100" id="btn-upload">
-                        <i class="fas fa-upload"></i> Fazer Upload
+                        <i class="fas fa-upload"></i> Enviar para o Cliente
                     </button>
                 </div>
             </div>
