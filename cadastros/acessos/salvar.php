@@ -8,6 +8,8 @@ if($id == 0){
     $dados["op_altera_cadastro"] = $_POST["op_altera_cadastro"];
     $dados["op_dashboard"] = $_POST["op_dashboard"];
     $dados["op_acesso_rotinas"] = $_POST["op_acesso_rotinas"];
+    $dados["id_usuario"] = $id_usuario;
+
 
     $retorno = $db->incluir("tb_tp_acessos", $dados);
    
@@ -19,6 +21,7 @@ if($id == 0){
     $dados["op_altera_cadastro"] = $_POST["op_altera_cadastro"];
     $dados["op_dashboard"] = $_POST["op_dashboard"];
     $dados["op_acesso_rotinas"] = $_POST["op_acesso_rotinas"];
+    $dados["id_usuario"] = $id_usuario;
 
     $alterar = $db->alterar("tb_tp_acessos", $dados, "id_tp_acesso = $id");
 

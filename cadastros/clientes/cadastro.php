@@ -41,8 +41,7 @@ $id_cliente = $db->getRegistro("SELECT * FROM tb_clientes WHERE id_cliente = :id
                         <input type="text" class="form-control" id="documento" name="nr_documento" 
                             value="<?= isset($id_cliente["nr_documento"]) && $id_cliente["nr_documento"] != "" ? maskDocumento($id_cliente["nr_documento"]) : "" ?>" 
                             required placeholder="Selecione o tipo primeiro" maxlength="18" 
-                            <?= isset($id_cliente["nr_documento"]) && $id_cliente["nr_documento"] != "" ? "readonly" : "disabled"?>
-                            minlength="11">
+                            <?= isset($id_cliente["nr_documento"]) && $id_cliente["nr_documento"] != "" ? "readonly" : "disabled"?> minlength="11">
                         <div class="form-text" id="doc-info">Mínimo 11 caracteres</div>
                     </div>
                 </div>
