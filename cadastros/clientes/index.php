@@ -17,7 +17,6 @@ $clientes = $db->getRegistros("SELECT id_cliente, nm_cliente, email, nr_document
                     <tr>
                         <th width="80">ID</th>
                         <th>Nome</th>
-                        <th>Email</th>
                         <th>CPF/CNPJ</th>
                         <th>Ativo?</th>
                         <th width="150">Opções</th>
@@ -31,7 +30,6 @@ $clientes = $db->getRegistros("SELECT id_cliente, nm_cliente, email, nr_document
                     <tr class="<?=$classe?>">
                         <td><?= $c['id_cliente'] ?></td>
                         <td><?= $c['nm_cliente'] ?></td>
-                        <td><?= $c['email'] ?></td>
                         <td><?= maskDocumento($c['nr_documento']) ?></td>
                         <td><?= $c['ativo'] == "S" ? "Sim" : "Não" ?></td>
                         <td>

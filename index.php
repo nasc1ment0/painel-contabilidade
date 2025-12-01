@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+date_default_timezone_set('America/Sao_Paulo');
 require "classes/classe_conexao.php";
 $db = new Database();
 require "funcoes/funcoes.php";

@@ -48,16 +48,18 @@ $id_cliente = $db->getRegistro("SELECT * FROM tb_clientes WHERE id_cliente = :id
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" id="email" name="email" 
+                        <label for="email" class="form-label">Email (Pode colocar mais de um separando com ;)<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="email" name="email" 
                                value="<?= isset($id_cliente["email"]) && $id_cliente["email"] != "" ? $id_cliente["email"] : "" ?>" 
-                               required placeholder="exemplo@email.com" maxlength="100">
+                               placeholder="exemplo@email.com" maxlength="100">
                     </div>
                 </div>
-                
-                <div class="col-md-6">
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
                     <div class="mb-3">
                         <label for="contato_principal" class="form-label">Nome do Contato Principal</label>
                         <input type="text" class="form-control" id="contato_principal" name="nm_contato" 
@@ -65,10 +67,7 @@ $id_cliente = $db->getRegistro("SELECT * FROM tb_clientes WHERE id_cliente = :id
                                placeholder="Nome da pessoa para contato" maxlength="100">
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="mb-3">
                         <label for="telefone_fixo" class="form-label">Número de Telefone (Fixo)</label>
                         <input type="text" class="form-control maskTel" id="telefone_fixo" name="nr_tel" 
@@ -77,7 +76,7 @@ $id_cliente = $db->getRegistro("SELECT * FROM tb_clientes WHERE id_cliente = :id
                     </div>
                 </div>
                 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="mb-3">
                         <label for="celular" class="form-label">Número de Celular (Whatsapp)</label>
                         <input type="text" class="form-control maskCel" id="celular" name="nr_cel" 

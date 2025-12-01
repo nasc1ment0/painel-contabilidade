@@ -8,6 +8,9 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+$listaEmails = explode(";", $cliente['email']);
+$listaEmails = array_map('trim', $listaEmails);
+
 $mail = new PHPMailer(true);
 
 try {
@@ -23,7 +26,11 @@ try {
 
     // Remetente e destino
     $mail->setFrom($_ENV['EMAIL_TESTE'], 'Painel Contabilidade Vista');
-    $mail->addAddress($cliente['email'], nm_cliente($id_cliente));
+    $mail->addAddress($listaEmails[0], nm_cliente($id_cliente));
+
+    for ($i = 1; $i < count($listaEmails); $i++) {
+        $mail->addCC($listaEmails[$i]);
+    }
 
     // Conteúdo
     $mail->isHTML(true);
