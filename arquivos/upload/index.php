@@ -50,7 +50,7 @@
 $(document).ready(function () {
 
     $("#nm_cliente").autocomplete({
-        source: "funcoes/buscas/buscacliente.php",
+        source: "funcoes/buscas/buscaCliente.php",
         minLength: 2,
         select: function (event, ui) {
             $("#id_cliente").val(ui.item.id_cliente);
