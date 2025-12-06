@@ -42,7 +42,7 @@ try {
         $mail->addAttachment($arquivo['caminho'], $arquivo['nome']);
     }
     $mail->send();
-    echo "Email enviado com sucesso!";
+    //echo "Email enviado com sucesso!";
 
     $dados = [];
     $dados["remetente"] = $_ENV['EMAIL_TESTE'];
@@ -54,7 +54,7 @@ try {
     $db->incluir("log_emails", $dados);
 
 } catch (Exception $e) {
-    echo "Erro ao enviar email: {$mail->ErrorInfo}";
+    //echo "Erro ao enviar email: {$mail->ErrorInfo}";
 
     $dados = [];
     $dados["remetente"] = $_ENV['EMAIL_TESTE'];
