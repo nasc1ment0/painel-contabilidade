@@ -188,6 +188,9 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
     <!-- Mascáras JS -->
     <script src="js/masks.js"></script>
 
+    <!-- Bootstrap modal -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+
     <!-- Script pro submenu -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
