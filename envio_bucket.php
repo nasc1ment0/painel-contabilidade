@@ -19,7 +19,7 @@ $s3 = new S3Client([
     ]
 ]);
 
-function enviarParaS3($arquivoTmp, $nomeArquivo, $idCliente)
+function enviarParaS3($arquivoTmp, $nomeArquivo, $idCliente, $tipoArquivo)
 {
     global $s3;
 
@@ -30,6 +30,7 @@ function enviarParaS3($arquivoTmp, $nomeArquivo, $idCliente)
             'Bucket' => $bucket,
             'Key'    => "clientes/$idCliente/$nomeArquivo",
             'SourceFile' => $arquivoTmp,
+            'ContentType' => $tipoArquivo,
             'ACL'    => 'public-read'
         ]);
 

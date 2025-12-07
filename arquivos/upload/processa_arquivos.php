@@ -33,9 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $nomeArquivo = preg_replace("/[^a-zA-Z0-9\._-]/", "_", $arquivos['name'][$i]);
         $arquivoTmp = $arquivos['tmp_name'][$i];
+        $tp_arquivo = $arquivos['type'][$i]; 
 
         // ENVIA DIRETO PARA O BUCKET
-        $url = enviarParaS3($arquivoTmp, $nomeArquivo, $id_cliente);
+        $url = enviarParaS3($arquivoTmp, $nomeArquivo, $id_cliente, $tp_arquivo);
 
         if ($url !== false) {
 
@@ -44,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $dados = [];
             $dados['id_cliente'] = $id_cliente;
             $dados['nm_caminho'] = $url;
+            $dados['tp_arquivo'] = $tp_arquivo;
             $dados['dt_envio'] = date("Y-m-d H:i:s");
             $dados['id_usuario'] = $id_usuario;
 
