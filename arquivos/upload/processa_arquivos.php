@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $arquivos = $_FILES['arquivos'] ?? [];
 
     // Verificar se cliente existe
-    $cliente = $db->getRegistro("SELECT id_cliente, nm_cliente, email FROM tb_clientes WHERE id_cliente = :id",[":id" => $id_cliente]);
+    $cliente = $db->getRegistro("SELECT id_cliente, nm_cliente, email FROM tb_clientes WHERE id_cliente = :id", [":id" => $id_cliente]);
 
     if (!$cliente) {
         throw new Exception("Cliente não encontrado");
@@ -22,42 +22,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $uploadsSucesso = [];
     $uploadsErro = [];
 
-    // Processar múltiplos arquivos
+    require("envio_bucket.php");
+
     for ($i = 0; $i < count($arquivos['name']); $i++) {
+
         if ($arquivos['error'][$i] !== UPLOAD_ERR_OK) {
             $uploadsErro[] = $arquivos['name'][$i] . " - Erro no upload";
             continue;
         }
 
-        // Validar tamanho do arquivo (máximo 10MB)
-        if ($arquivos['size'][$i] > 10 * 1024 * 1024) {
-            $uploadsErro[] = $arquivos['name'][$i] . " - Arquivo muito grande (máx. 10MB)";
-            continue;
-        }
-
-        // Sanitizar nome do arquivo
         $nomeArquivo = preg_replace("/[^a-zA-Z0-9\._-]/", "_", $arquivos['name'][$i]);
-        $caminhoCompleto = $pastaCliente . $nomeArquivo;
+        $arquivoTmp = $arquivos['tmp_name'][$i];
 
-        // Mover arquivo
-        if (move_uploaded_file($arquivos['tmp_name'][$i], $caminhoCompleto)) {
+        // ENVIA DIRETO PARA O BUCKET
+        $url = enviarParaS3($arquivoTmp, $nomeArquivo, $id_cliente);
+
+        if ($url !== false) {
+
             $uploadsSucesso[] = $nomeArquivo;
 
             $dados = [];
             $dados['id_cliente'] = $id_cliente;
-            $dados['nm_caminho'] = $caminhoCompleto;
+            $dados['nm_caminho'] = $url;
             $dados['dt_envio'] = date("Y-m-d H:i:s");
             $dados['id_usuario'] = $id_usuario;
 
-            $db->incluir("tb_uploads", $dados);
+            $retorno = $db->incluir("tb_uploads", $dados);
 
             $arquivosSalvos[] = [
                 'nome' => $nomeArquivo,
-                'caminho' => $caminhoCompleto
+                'caminho' => $url
             ];
 
         } else {
-            $uploadsErro[] = $arquivos['name'][$i] . " - Erro ao salvar arquivo";
+            $uploadsErro[] = $nomeArquivo . " - Erro ao enviar para o S3";
         }
     }
 

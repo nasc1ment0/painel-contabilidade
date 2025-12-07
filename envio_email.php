@@ -39,7 +39,13 @@ try {
     
     //Inclusão dos arquivos no email
     foreach ($arquivosSalvos as $arquivo) {
-        $mail->addAttachment($arquivo['caminho'], $arquivo['nome']);
+        //salva arquivo da nuvem temporariamente para enviar por email depois
+        $tmp = tempnam(sys_get_temp_dir(), 'att_');
+        $conteudo = @file_get_contents($arquivo['caminho']);
+        file_put_contents($tmp, $conteudo);
+
+        $mail->addAttachment($tmp, $arquivo['nome']);
+        @unlink($tmp);
     }
     $mail->send();
     //echo "Email enviado com sucesso!";
