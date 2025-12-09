@@ -54,4 +54,11 @@ function nm_cliente($id)
     $usuario = $db->getRegistro("SELECT nm_cliente FROM tb_clientes WHERE id_cliente = :id", [":id" => $id]);
     return $usuario["nm_cliente"];
 }
+
+function nm_usuario($id)
+{
+    global $db;
+    $usuario = $db->getRegistro("SELECT nm_usuario FROM tb_usuarios WHERE id_usuario = :id", [":id" => $id]);
+    return $usuario["nm_usuario"];
+}
 ?>

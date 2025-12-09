@@ -128,6 +128,11 @@ body {
     border-radius: 12px;
 }
 
+.chart-container {
+    position: relative;
+    height: 160px;   /* altura uniforme */
+}
+
 @media (max-width: 768px) {
     .sidebar {
         width: 70px;
