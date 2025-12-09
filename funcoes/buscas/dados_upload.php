@@ -6,9 +6,9 @@ header('Content-Type: application/json');
 
 // Consulta apenas os últimos 5 meses
 $sql = $db->getRegistros("SELECT DATE_FORMAT(dt_envio, '%m') AS mes_num,DATE_FORMAT(dt_envio, '%Y') AS ano, COUNT(*) AS total FROM tb_uploads 
-    WHERE dt_envio >= :data_env
+    WHERE dt_envio >= DATE_SUB(CURDATE(), INTERVAL 5 MONTH)
     GROUP BY ano, mes_num
-    ORDER BY ano, mes_num",[":data_env" => "DATE_SUB(CURDATE(), INTERVAL 5 MONTH)"]);
+    ORDER BY ano, mes_num",[]);
 
 $labels = [];
 $values = [];

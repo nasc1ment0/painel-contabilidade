@@ -41,7 +41,7 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <i class="fas fa-chart-area"></i> Comparação de Tipos de Clientes
+                <i class="fas fa-chart-area"></i> Comparação de Tipos de Clientes (%)
             </div>
             <div class="card-body">
                 <canvas id="comparisonChart" height="160"></canvas>
