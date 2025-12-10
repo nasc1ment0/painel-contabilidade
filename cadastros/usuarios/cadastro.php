@@ -36,6 +36,7 @@ $tipos_acesso = $db->getRegistros("SELECT id_tp_acesso, ds_tp_acesso FROM tb_tp_
                 </div>
             </div>
 
+            <?php if($id == 0){ ?>
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
@@ -56,6 +57,7 @@ $tipos_acesso = $db->getRegistros("SELECT id_tp_acesso, ds_tp_acesso FROM tb_tp_
                     </div>
                 </div>
             </div>
+            <?php }?>
 
             <div class="row">
                 <div class="col-md-6">

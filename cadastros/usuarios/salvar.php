@@ -5,13 +5,13 @@ $dados = [];
 
 $dados["nm_usuario"] = $_POST["nm_usuario"];
 $dados["nm_email"] = $_POST["nm_email"];
-$dados["senha"] = password_hash($_POST["senha"], PASSWORD_DEFAULT);
 $dados["id_acesso"] = $_POST["id_acesso"];
 
 
 
 if($id == 0){
 
+    $dados["senha"] = password_hash($_POST["senha"], PASSWORD_DEFAULT);
     //Verifica se não existe nenhum usuário com o mesmo email já cadastrado.
     $usuarios = $db->getRegistro("SELECT nm_email FROM tb_usuarios WHERE nm_email = :email", [":email" => trim($_POST["nm_email"])]);
     if(isset($usuarios['nm_email'])){
