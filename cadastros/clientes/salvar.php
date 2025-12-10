@@ -8,7 +8,7 @@ $dados["tp_cliente"] = $_POST["tp_cliente"];
 $dados["nr_documento"] = limpa_texto($_POST["nr_documento"]);
 $dados["email"] = $_POST["email"];
 $dados["contato_cliente"] = $_POST["nm_contato"];
-$dados["nr_tel"] = limpa_texto($_POST["nr_tel"]);
+$dados["nr_tel"] = $_POST["nr_tel"] == "" ? 0 : limpa_texto($_POST["nr_tel"]);
 $dados["nr_cel"] = limpa_texto($_POST["nr_cel"]);
 
 
