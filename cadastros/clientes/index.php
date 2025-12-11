@@ -55,13 +55,3 @@ $clientes = $db->getRegistros("SELECT id_cliente, nm_cliente, email, nr_document
         </div>
     </div>
 </div>
-<script src="js/datatables.js"></script>
-<style>
-.table th {
-    font-weight: 600;
-    background-color: #34495e;
-}
-.btn-group-sm > .btn {
-    padding: 0.25rem 0.5rem;
-}
-</style>

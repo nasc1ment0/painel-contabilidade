@@ -104,28 +104,28 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
         switch ($rotina) {
             case 0: // Dashboard
                 include('dashboard.php');
-            break;
+                break;
 
             case 1: // Tipos de acesso
                 if ($mod == 0) {
                     include('cadastros/acessos/index.php');
                 } elseif ($mod == 1) {
                     include('cadastros/acessos/cadastro.php');
-                }elseif ($mod == 2) {
+                } elseif ($mod == 2) {
                     include('cadastros/acessos/salvar.php');
-                }elseif ($mod == 3) {
+                } elseif ($mod == 3) {
                     include('cadastros/acessos/inativa_cad.php');
                 }
-            break;
+                break;
 
             case 2: // Usuários
                 if ($mod == 0) {
                     include('cadastros/usuarios/index.php');
-                }elseif ($mod == 1) {
+                } elseif ($mod == 1) {
                     include('cadastros/usuarios/cadastro.php');
-                }elseif($mod == 2){
+                } elseif ($mod == 2) {
                     include('cadastros/usuarios/salvar.php');
-                }elseif ($mod == 3) {
+                } elseif ($mod == 3) {
                     include('cadastros/usuarios/inativa_cad.php');
                 }
                 break;
@@ -133,25 +133,24 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
             case 3: // Clientes
                 if ($mod == 0) {
                     include('cadastros/clientes/index.php');
-                }elseif ($mod == 1) {
+                } elseif ($mod == 1) {
                     include('cadastros/clientes/cadastro.php');
-                }elseif ($mod == 2) {
+                } elseif ($mod == 2) {
                     include('cadastros/clientes/salvar.php');
-                }elseif ($mod == 3) {
+                } elseif ($mod == 3) {
                     include('cadastros/clientes/inativa_cad.php');
-                }
-            break;
-
-            case 4: // Download
-                if ($mod == 0) {
-                    include('rotinas/arquivos/download.php');
                 }
                 break;
 
+            case 4: // Download
+                if ($mod == 0) {
+                    include('arquivos/download/index.php');
+                }
+                break;
             case 5: // Upload
                 if ($mod == 0) {
                     include('arquivos/upload/index.php');
-                }elseif($mod == 1) {
+                } elseif ($mod == 1) {
                     include('arquivos/upload/processa_arquivos.php');
                 }
                 break;
@@ -181,6 +180,7 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
     <!-- Datatable -->
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/dataTables.bootstrap5.min.js"></script>
+    <script src="js/datatables.js"></script>
 
     <!-- Autocomplete UI -->
     <link rel="stylesheet" href="css/jquery-ui.css">

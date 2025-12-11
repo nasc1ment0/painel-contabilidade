@@ -53,13 +53,3 @@ $acessos = $db->getRegistros("SELECT id_tp_acesso, ds_tp_acesso, ativo FROM tb_t
         </div>
     </div>
 </div>
-<script src="js/datatables.js"></script>
-<style>
-.table th {
-    font-weight: 600;
-    background-color: #34495e;
-}
-.btn-group-sm > .btn {
-    padding: 0.25rem 0.5rem;
-}
-</style>
