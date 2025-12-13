@@ -18,7 +18,7 @@ try {
     $mail->isSMTP();
     $mail->Host = 'smtp.titan.email';
     $mail->SMTPAuth = true;
-    $mail->Username = $_ENV['EMAIL_TESTE']; // ou coloque direto se for s√≥ teste
+    $mail->Username = $_ENV['EMAIL_TESTE']; // ou coloque direto se for sÛ teste
     $mail->Password = $_ENV['SENHA_EMAIL_TESTE']; // senha de app do Gmail
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = 587;
@@ -32,12 +32,12 @@ try {
         $mail->addCC($listaEmails[$i]);
     }
 
-    // Conte√∫do
+    // Conte˙do
     $mail->isHTML(true);
     $mail->Subject = "Novos arquivos compartilhados no painel";
-    $mail->Body = "<h4>Ol√° " . nm_cliente($id_cliente) . ",</h4><p>Segue em anexo os arquivos enviados atrav√©s do painel.</p>";
+    $mail->Body = "<h4>Ol· " . nm_cliente($id_cliente) . ",</h4><p>Segue em anexo os arquivos enviados atravÈs do painel.</p>";
     
-    //Inclus√£o dos arquivos no email
+    //Inclus„o dos arquivos no email
     foreach ($arquivosSalvos as $arquivo) {
         //salva arquivo da nuvem temporariamente para enviar por email depois
         $tmp = tempnam(sys_get_temp_dir(), 'att_');
@@ -49,7 +49,7 @@ try {
     }
     $mail->send();
 
-    //Apaga os arquivos tempor√°rios depois de enviar o email 
+    //Apaga os arquivos tempor·rios depois de enviar o email 
     foreach ($tmpFiles as $tmp) {
         @unlink($tmp);
     }
@@ -57,12 +57,12 @@ try {
     $dados = [];
     $dados["remetente"] = $_ENV['EMAIL_TESTE'];
     $dados["destinatario"] = $cliente['email'];
-    $dados["body_email"] = $mail->Body;
+    $dados["body_email"] = utf8_encode($mail->Body);
     $dados["dt_log"] = date("Y-m-d H:i:s");
     $dados["retorno"] = "Email enviado com sucesso!";
 
     $db->incluir("log_emails", $dados);
-
+    
 } catch (Exception $e) {
     //echo "Erro ao enviar email: {$mail->ErrorInfo}";
     foreach ($tmpFiles as $tmp) {
@@ -72,7 +72,7 @@ try {
     $dados = [];
     $dados["remetente"] = $_ENV['EMAIL_TESTE'];
     $dados["destinatario"] = $cliente['email'];
-    $dados["body_email"] = $mail->Body;
+    $dados["body_email"] = utf8_encode($mail->Body);
     $dados["dt_log"] = date("Y-m-d H:i:s");
     $dados["retorno"] = $mail->ErrorInfo;
 

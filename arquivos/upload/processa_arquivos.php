@@ -74,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['tipo_mensagem'] = empty($uploadsErro) ? 'success' : 'warning';
 
     require("envio_email.php");
+
     // Redirecionar de volta para o formulário
     ob_end_clean(); // limpa qualquer saída ANTES do header
     header("Location: index.php?rotina=5&mod=0");
