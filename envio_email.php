@@ -31,12 +31,12 @@ try {
     for ($i = 1; $i < count($listaEmails); $i++) {
         $mail->addCC($listaEmails[$i]);
     }
-    
+
     $mail->addBCC($_ENV['EMAIL_COPIA']);
     $mail->isHTML(true);
     $mail->Subject = "Novos arquivos compartilhados no painel";
-    $mail->Body = "<h4>Olá " . nm_cliente($id_cliente) . ",</h4><p>Segue em anexo os arquivos enviados através do painel.</p>";
-    
+    $mail->Body = "<h4>Olá " . nm_cliente($id_cliente) . ",</h4><p>{$mensagem_email}</p>";
+
     //Inclusão dos arquivos no email
     foreach ($arquivosSalvos as $arquivo) {
         //salva arquivo da nuvem temporariamente para enviar por email depois
@@ -44,7 +44,7 @@ try {
         $conteudo = @file_get_contents($arquivo['caminho']);
         file_put_contents($tmp, $conteudo);
 
-        $mail->addAttachment($tmp, $arquivo['nome']);
+        $mail->addAttachment($tmp, utf8_encode($arquivo['nome']));
         $tmpFiles[] = $tmp;
     }
     $mail->send();
@@ -57,12 +57,15 @@ try {
     $dados = [];
     $dados["remetente"] = $_ENV['EMAIL_TESTE'];
     $dados["destinatario"] = $cliente['email'];
+    $dados["tp_mensagem"] = $tp_mensagem;
     $dados["body_email"] = utf8_encode($mail->Body);
+    $dados["id_cliente"] = $id_cliente;
+    $dados["id_usuario"] = $id_usuario;
     $dados["dt_log"] = date("Y-m-d H:i:s");
     $dados["retorno"] = "Email enviado com sucesso!";
 
     $db->incluir("log_emails", $dados);
-    
+
 } catch (Exception $e) {
     //echo "Erro ao enviar email: {$mail->ErrorInfo}";
     foreach ($tmpFiles as $tmp) {
@@ -72,7 +75,10 @@ try {
     $dados = [];
     $dados["remetente"] = $_ENV['EMAIL_TESTE'];
     $dados["destinatario"] = $cliente['email'];
+    $dados["tp_mensagem"] = $tp_mensagem;
     $dados["body_email"] = utf8_encode($mail->Body);
+    $dados["id_cliente"] = $id_cliente;
+    $dados["id_usuario"] = $id_usuario;
     $dados["dt_log"] = date("Y-m-d H:i:s");
     $dados["retorno"] = $mail->ErrorInfo;
 

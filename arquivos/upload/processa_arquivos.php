@@ -1,9 +1,11 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validar dados
-    $id_cliente  = $_POST['id_cliente'] ?? '';
-    $arquivos    = $_FILES['arquivos'] ?? [];
-    $envia_email = $_POST['modo_envio'];
+    $id_cliente     = $_POST['id_cliente'] ?? '';
+    $arquivos       = $_FILES['arquivos'] ?? [];
+    $envia_email    = $_POST['modo_envio'];
+    $tp_mensagem    = $_POST['tipo_mensagem'] ?? '';   
+    $mensagem_email = utf8_decode(nl2br($_POST['mensagem_email'])) ?? '';
 
     // Verificar se cliente existe
     $cliente = $db->getRegistro("SELECT id_cliente, nm_cliente, email FROM tb_clientes WHERE id_cliente = :id", [":id" => $id_cliente]);
@@ -32,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             continue;
         }
 
-        $nomeArquivo = preg_replace("/[^a-zA-Z0-9\._-]/", "_", $arquivos['name'][$i]);
+        $nomeArquivo = $arquivos['name'][$i];
         $arquivoTmp = $arquivos['tmp_name'][$i];
         $tp_arquivo = $arquivos['type'][$i]; 
 

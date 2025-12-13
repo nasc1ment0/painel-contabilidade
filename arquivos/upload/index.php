@@ -90,12 +90,7 @@
                         <div id="camposEmail">
                             <div class="mb-3 text-start">
                                 <label class="form-label">Tipo de mensagem</label>
-                                <select id="tipoMensagem" class="form-select">
-                                    <option value="">Selecione...</option>
-                                    <option value="padrao">Mensagem padrão</option>
-                                    <option value="financeiro">Financeiro</option>
-                                    <option value="documentos">Documentos</option>
-                                </select>
+                                <select id="tipoMensagem" class="form-select"></select>
                             </div>
 
                             <div class="mb-2 text-start">
@@ -118,6 +113,32 @@
                     document.getElementById('opcaoNuvem').addEventListener('change', toggleCampos);
 
                     toggleCampos();
+                    
+                    $.ajax({
+                        url: "funcoes/buscas/buscaMensagem.php",
+                        type: "GET",
+                        dataType: "json",
+                        success: function (dados) {
+                            let select = $("#tipoMensagem");
+                            select.empty().append('<option value="">Selecione...</option>');
+
+                            dados.forEach(item => {
+                                select.append(`
+                                    <option value="${item.id}" data-texto="${item.texto}">
+                                        ${item.nome}
+                                    </option>
+                                `);
+                            });
+                        },
+                        error: function () {
+                            Swal.showValidationMessage("Erro ao carregar tipos de mensagem");
+                        }
+                    });
+
+                    // Preenche o textarea ao trocar o tipo
+                    $(document).on("change", "#tipoMensagem", function () {
+                        $("#mensagemEmail").val($(this).find(":selected").data("texto") || "");
+                    });
                 },
                 preConfirm: () => {
                     const modo = document.querySelector('input[name="opcaoEnvio"]:checked').value;
@@ -195,12 +216,12 @@
 
 <?php if (isset($_SESSION['mensagem']) && $_SESSION['tipo_mensagem'] == 'success'): ?>
     <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Tudo certo!',
-                text: '<?php echo $_SESSION['mensagem']; ?>',
-                confirmButtonText: 'OK'
-            });
+        Swal.fire({
+            icon: 'success',
+            title: 'Tudo certo!',
+            text: '<?php echo $_SESSION['mensagem']; ?>',
+            confirmButtonText: 'OK'
+        });
     </script>
     <?php
     unset($_SESSION['mensagem'], $_SESSION['tipo_mensagem']);
