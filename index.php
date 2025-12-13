@@ -25,7 +25,7 @@ $titulos = [
     3 => 'Clientes',
     4 => 'Download de Arquivos',
     5 => 'Envio de Arquivos',
-    6 => 'Informações do Sistema',
+    6 => 'Tipos de Mensagem',
     7 => 'Contatos'
 ];
 
@@ -78,10 +78,11 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
             <span class="menu-text">Arquivos</span>
         </a>
         <div class="submenu" id="arquivos-submenu">
+            <a href="index.php?rotina=6&mod=0"><i class="fas fa-envelope-open-text"></i> Tipos de mensagem</a>
             <a href="index.php?rotina=4&mod=0"><i class="fas fa-download"></i> Download</a>
             <a href="index.php?rotina=5&mod=0"><i class="fas fa-upload"></i> Upload</a>
         </div>
-
+        <!--
         <a href="#" class="menu-item has-submenu" id="ajuda-menu">
             <i class="fas fa-question-circle"></i>
             <span class="menu-text">Ajuda</span>
@@ -90,7 +91,7 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
             <a href="#"><i class="fas fa-info-circle"></i> Informações de funcionamento</a>
             <a href="#"><i class="fas fa-phone"></i> Contatos</a>
         </div>
-
+        -->
         <div class="sidebar-footer" style="padding: 15px 20px; margin-top: auto;">
             <a href="logout.php" class="btn btn-outline-light btn-sm w-100">
                 <i class="fas fa-sign-out-alt"></i> Sair
@@ -156,15 +157,15 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
                 }
                 break;
 
-            case 6: // Informações
+            case 6: // Cadastro de tipos de mensagem
                 if ($mod == 0) {
-                    include('rotinas/ajuda/informacoes.php');
-                }
-                break;
-
-            case 7: // Contatos
-                if ($mod == 0) {
-                    include('rotinas/ajuda/contatos.php');
+                    include('arquivos/cadastro/index.php');
+                } elseif ($mod == 1) {
+                    include('arquivos/cadastro/cadastro.php');
+                } elseif ($mod == 2) {
+                    include('arquivos/cadastro/salvar.php');
+                } elseif ($mod == 3) {
+                    include('arquivos/cadastro/inativa_cad.php');
                 }
                 break;
 

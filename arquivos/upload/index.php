@@ -24,9 +24,9 @@
             </div>
 
             <!-- Botão Upload -->
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" style="text-align:center">
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary w-100" id="btn-upload" style="font-size: 20px;">
+                    <button type="submit" class="btn btn-primary w-50" id="btn-upload" style="font-size: 20px;">
                         <i class="bi bi-envelope-arrow-up"></i> Enviar
                     </button>
                 </div>
