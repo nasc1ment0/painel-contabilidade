@@ -1,8 +1,9 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validar dados
-    $id_cliente = $_POST['id_cliente'] ?? '';
-    $arquivos = $_FILES['arquivos'] ?? [];
+    $id_cliente  = $_POST['id_cliente'] ?? '';
+    $arquivos    = $_FILES['arquivos'] ?? [];
+    $envia_email = $_POST['modo_envio'];
 
     // Verificar se cliente existe
     $cliente = $db->getRegistro("SELECT id_cliente, nm_cliente, email FROM tb_clientes WHERE id_cliente = :id", [":id" => $id_cliente]);
@@ -73,11 +74,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['mensagem'] = $mensagem ?: "Nenhum arquivo processado";
     $_SESSION['tipo_mensagem'] = empty($uploadsErro) ? 'success' : 'warning';
 
-    require("envio_email.php");
-
+    if($envia_email == "T"){
+        require("envio_email.php");
+    }
+    
     // Redirecionar de volta para o formulário
-    ob_end_clean(); // limpa qualquer saída ANTES do header
-    header("Location: index.php?rotina=5&mod=0");
-    exit;
+    //ob_end_clean(); // limpa qualquer saída ANTES do header
+    //header("Location: index.php?rotina=5&mod=0");
+    //exit;
 }
 ?>

@@ -3,16 +3,8 @@
         <h5 class="card-title mb-0">Upload de Arquivos</h5>
     </div>
     <div class="card-body">
-        <!-- Exibe mensagens -->
-        <?php if (isset($_SESSION['mensagem'])): ?>
-            <div class="alert alert-<?php echo $_SESSION['tipo_mensagem'] ?? 'info'; ?> alert-dismissible fade show" role="alert">
-                <?php echo $_SESSION['mensagem']; ?>
-            </div>
-            <?php
-        endif; ?>
-
         <form id="formUpload" method="POST" action="index.php?rotina=5&mod=1" enctype="multipart/form-data">
-
+            <input type="hidden" name="modo_envio" id="modo_envio">
             <!-- Seleção do Cliente -->
             <div class="row mb-4">
                 <div class="col-md-12">
@@ -27,117 +19,189 @@
             <div class="row mb-4">
                 <div class="col-md-12">
                     <label for="arquivos" class="form-label">Arquivos <span class="text-danger">*</span></label>
-                    <input type="file" class="form-control" id="arquivos" name="arquivos[]" multiple >
+                    <input type="file" class="form-control" id="arquivos" name="arquivos[]" multiple>
                 </div>
             </div>
 
             <!-- Botão Upload -->
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-success w-100" id="btn-upload">
-                        <i class="fas fa-upload"></i> Enviar para o Cliente
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100" id="btn-upload" style="font-size: 20px;">
+                        <i class="bi bi-envelope-arrow-up"></i> Enviar
                     </button>
                 </div>
+
             </div>
         </form>
     </div>
 </div>
 
-<!-- MODAL DE CARREGAMENTO -->
-<div class="modal fade" id="modalCarregando" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content d-flex flex-column justify-content-center align-items-center p-4 text-center">
-
-      <div class="spinner-border text-primary mb-3" style="width: 4rem; height: 4rem;" role="status"></div>
-
-      <h5>Aguarde...</h5>
-      <p>Enviando arquivos e notificando o cliente.</p>
-
-    </div>
-  </div>
-</div>
-
-
-<!-- MODAL DE SUCESSO -->
-<div class="modal fade" id="modalSucesso" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-4 text-center">
-
-      <div class="text-success" style="font-size: 4rem;">✔</div>
-
-      <h4 class="mt-3">Tudo certo!</h4>
-      <p>Seus arquivos foram enviados com sucesso.</p>
-
-      <button class="btn btn-success mt-2" data-bs-dismiss="modal">OK</button>
-
-    </div>
-  </div>
-</div>
-
 <script>
-$(document).ready(function () {
+    $(document).ready(function () {
 
-    $("#nm_cliente").autocomplete({
-        source: "funcoes/buscas/buscaCliente.php",
-        minLength: 2,
-        select: function (event, ui) {
-            $("#id_cliente").val(ui.item.id_cliente);
-        }
-    });
+        // AUTOCOMPLETE CLIENTE
+        $("#nm_cliente").autocomplete({
+            source: "funcoes/buscas/buscaCliente.php",
+            minLength: 2,
+            select: function (event, ui) {
+                $("#id_cliente").val(ui.item.id_cliente);
+            }
+        });
 
-    // VALIDAÇÃO ANTES DO SUBMIT
-    $("#formUpload").on("submit", function (e) {
-    let idCliente = $("#id_cliente").val().trim();
-    let arquivos  = $("#arquivos")[0].files.length;
-    let erros = [];
+        // SUBMIT VIA AJAX
+        $("#formUpload").on("submit", function (e) {
+            e.preventDefault();
 
-    if (!idCliente) erros.push("Selecione um cliente válido.");
-    if (arquivos === 0) erros.push("Selecione pelo menos um arquivo.");
+            let idCliente = $("#id_cliente").val().trim();
+            let arquivos = $("#arquivos")[0].files.length;
+            let erros = [];
 
-    if (erros.length > 0) {
-        e.preventDefault();
+            if (!idCliente) erros.push("Selecione um cliente válido.");
+            if (arquivos === 0) erros.push("Selecione pelo menos um arquivo.");
 
-        $("#alert-validation").remove();
+            if (erros.length > 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Verifique os dados',
+                    html: `<ul style="text-align:left">${erros.map(e => `<li>${e}</li>`).join("")}</ul>`
+                });
+                return;
+            }
 
-        let alertaHTML = `
-        <div id="alert-validation" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-            <strong>Ops! Verifique os campos:</strong>
-            <ul class="mb-0 mt-2">
-                ${erros.map(err => `<li>${err}</li>`).join("")}
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>`;
+            Swal.fire({
+                title: 'Envio dos arquivos',
+                html: `
+                        <div class="d-flex justify-content-center gap-4 mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="opcaoEnvio" id="opcaoEmail" value="T" checked>
+                                <label class="form-check-label" for="opcaoEmail">
+                                    Enviar email
+                                </label>
+                            </div>
 
-        $(".card-body").prepend(alertaHTML);
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="opcaoEnvio" id="opcaoNuvem" value="N">
+                                <label class="form-check-label" for="opcaoNuvem">
+                                    Apenas salvar na nuvem
+                                </label>
+                            </div>
+                        </div>
 
-    } else {
-        e.preventDefault(); // NÃO deixar enviar ainda!
+                        <div id="camposEmail">
+                            <div class="mb-3 text-start">
+                                <label class="form-label">Tipo de mensagem</label>
+                                <select id="tipoMensagem" class="form-select">
+                                    <option value="">Selecione...</option>
+                                    <option value="padrao">Mensagem padrão</option>
+                                    <option value="financeiro">Financeiro</option>
+                                    <option value="documentos">Documentos</option>
+                                </select>
+                            </div>
 
-        // Abre modal de carregamento
-        let modalLoad = new bootstrap.Modal(document.getElementById('modalCarregando'));
-        modalLoad.show();
+                            <div class="mb-2 text-start">
+                                <label class="form-label">Mensagem</label>
+                                <textarea id="mensagemEmail" class="form-control" rows="3"
+                                    placeholder="Digite a mensagem do email..."></textarea>
+                            </div>
+                        </div>
+                    `,
+                showCancelButton: true,
+                confirmButtonText: 'Enviar',
+                cancelButtonText: 'Cancelar',
+                didOpen: () => {
+                    const toggleCampos = () => {
+                        const envioEmail = document.getElementById('opcaoEmail').checked;
+                        document.getElementById('camposEmail').style.display = envioEmail ? 'block' : 'none';
+                    };
 
-        // Envia form manualmente depois de 300ms
-        setTimeout(() => {
-            $("#formUpload")[0].submit();
-        }, 300);
-    }
-});
+                    document.getElementById('opcaoEmail').addEventListener('change', toggleCampos);
+                    document.getElementById('opcaoNuvem').addEventListener('change', toggleCampos);
 
-});
+                    toggleCampos();
+                },
+                preConfirm: () => {
+                    const modo = document.querySelector('input[name="opcaoEnvio"]:checked').value;
+
+                    let retorno = {
+                        modo_envio: modo,
+                        tipo_mensagem: null,
+                        mensagem: null
+                    };
+
+                    if (modo === 'T') {
+                        retorno.tipo_mensagem = document.getElementById('tipoMensagem').value;
+                        retorno.mensagem = document.getElementById('mensagemEmail').value;
+                    }
+
+                    return retorno;
+                }
+            }).then((result) => {
+
+                if (!result.isConfirmed) return;
+
+                $("#modo_envio").val(result.value.modo_envio);
+
+                // futuramente você pode enviar isso também:
+                // result.value.tipo_mensagem
+                // result.value.mensagem
+
+                // LOADING
+                Swal.fire({
+                    title: 'Processando...',
+                    text: 'Enviando arquivos, aguarde',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                let formData = new FormData($("#formUpload")[0]);
+
+                // se quiser já enviar agora:
+                formData.append('tipo_mensagem', result.value.tipo_mensagem);
+                formData.append('mensagem_email', result.value.mensagem);
+
+                $.ajax({
+                    url: $("#formUpload").attr("action"),
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Tudo certo!',
+                            text: 'Os arquivos foram enviados com sucesso.',
+                            confirmButtonText: 'OK'
+                        });
+
+                        $("#formUpload")[0].reset();
+                        $("#id_cliente").val("");
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erro',
+                            text: 'Ocorreu um erro ao enviar os arquivos.'
+                        });
+                    }
+                });
+
+            });
+        })
+    })
 </script>
+
 
 <?php if (isset($_SESSION['mensagem']) && $_SESSION['tipo_mensagem'] == 'success'): ?>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(() => {
-        let modalOk = new bootstrap.Modal(document.getElementById('modalSucesso'));
-        modalOk.show();
-    }, 100);
-});
-</script>
-<?php 
-unset($_SESSION['mensagem']);
-unset($_SESSION['tipo_mensagem']);
+    <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Tudo certo!',
+                text: '<?php echo $_SESSION['mensagem']; ?>',
+                confirmButtonText: 'OK'
+            });
+    </script>
+    <?php
+    unset($_SESSION['mensagem'], $_SESSION['tipo_mensagem']);
 endif; ?>
-

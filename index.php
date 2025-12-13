@@ -44,6 +44,7 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="css/bootstrap-icons.css">
     <script src="js/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -191,6 +192,9 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
 
     <!-- Bootstrap modal -->
     <script src="js/bootstrap.bundle.min.js"></script>
+    
+    <!-- SweetAlert modal -->
+    <script src="js/sweetalert.js"></script>
 
     <!-- Script pro submenu -->
     <script>

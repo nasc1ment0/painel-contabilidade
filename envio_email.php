@@ -16,7 +16,7 @@ $mail = new PHPMailer(true);
 try {
     // Config SMTP
     $mail->isSMTP();
-    $mail->Host = 'smtp.titan.email';
+    $mail->Host = $_ENV['HOST_EMAIL'];
     $mail->SMTPAuth = true;
     $mail->Username = $_ENV['EMAIL_TESTE']; // ou coloque direto se for só teste
     $mail->Password = $_ENV['SENHA_EMAIL_TESTE']; // senha de app do Gmail
@@ -31,8 +31,8 @@ try {
     for ($i = 1; $i < count($listaEmails); $i++) {
         $mail->addCC($listaEmails[$i]);
     }
-
-    // Conteúdo
+    
+    $mail->addBCC($_ENV['EMAIL_COPIA']);
     $mail->isHTML(true);
     $mail->Subject = "Novos arquivos compartilhados no painel";
     $mail->Body = "<h4>Olá " . nm_cliente($id_cliente) . ",</h4><p>Segue em anexo os arquivos enviados através do painel.</p>";
