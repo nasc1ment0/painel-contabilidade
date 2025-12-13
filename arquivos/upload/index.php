@@ -121,7 +121,6 @@
                         success: function (dados) {
                             let select = $("#tipoMensagem");
                             select.empty().append('<option value="">Selecione...</option>');
-
                             dados.forEach(item => {
                                 select.append(`
                                     <option value="${item.id}" data-texto="${item.texto}">

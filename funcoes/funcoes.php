@@ -55,6 +55,13 @@ function nm_cliente($id)
     return $usuario["nm_cliente"];
 }
 
+function ds_mensagem($id)
+{
+    global $db;
+    $mensagem = $db->getRegistro("SELECT ds_tp_mensagem FROM tb_tp_mensagem WHERE id_tp_mensagem = :id", [":id" => $id]);
+    return $mensagem["ds_tp_mensagem"];
+}
+
 function nm_usuario($id)
 {
     global $db;

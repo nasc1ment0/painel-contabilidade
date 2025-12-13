@@ -57,7 +57,8 @@ try {
     $dados = [];
     $dados["remetente"] = $_ENV['EMAIL_TESTE'];
     $dados["destinatario"] = $cliente['email'];
-    $dados["tp_mensagem"] = $tp_mensagem;
+    $dados["tp_mensagem"] = $tp_mensagem != "" ? $tp_mensagem : 0;
+    $dados["ds_tp_mensagem"] = $tp_mensagem != "" ? utf8_encode(ds_mensagem($tp_mensagem)) : "Mensagem específica";
     $dados["body_email"] = utf8_encode($mail->Body);
     $dados["id_cliente"] = $id_cliente;
     $dados["id_usuario"] = $id_usuario;
@@ -75,7 +76,8 @@ try {
     $dados = [];
     $dados["remetente"] = $_ENV['EMAIL_TESTE'];
     $dados["destinatario"] = $cliente['email'];
-    $dados["tp_mensagem"] = $tp_mensagem;
+    $dados["tp_mensagem"] = $tp_mensagem != "" ? $tp_mensagem : 0;
+    $dados["ds_tp_mensagem"] = $tp_mensagem != "" ? utf8_encode(ds_mensagem($tp_mensagem)) : "Mensagem manual";
     $dados["body_email"] = utf8_encode($mail->Body);
     $dados["id_cliente"] = $id_cliente;
     $dados["id_usuario"] = $id_usuario;
