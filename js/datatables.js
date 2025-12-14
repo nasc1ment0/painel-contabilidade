@@ -1,3 +1,4 @@
+//TABELA PADRÃO
 $('#tablePadrao').DataTable({
     "language": {
         "url": "js/pt-BR.json"
@@ -8,7 +9,7 @@ $('#tablePadrao').DataTable({
     "info": true
 });
 
-
+//TABELA DE DOWNLOADS
 function carregarTabelaDownload(idCliente) {
     $("#cardDownload").show();
 
@@ -34,3 +35,5 @@ function carregarTabelaDownload(idCliente) {
         ]
     });
 }
+
+

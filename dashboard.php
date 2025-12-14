@@ -29,7 +29,7 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <i class="fas fa-chart-bar"></i> Atividades por Usuário
+                <i class="fas fa-chart-column"></i> Atividades por Usuário
             </div>
             <div class="card-body">
                 <canvas id="userActivityChart" height="100%"></canvas>
@@ -37,20 +37,54 @@
         </div>
     </div>
 
-    <!-- Gráfico de de rosquinha - Comparação de tipos de cliente -->
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">
-                <i class="fas fa-chart-area"></i> Comparação de Tipos de Clientes (%)
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>
+                    <i class="fas fa-chart-simple"></i> Tipos de Mensagens Mais Enviadas
+                </span>
+
+                <button type="button" class="btn btn-sm btn-outline-primary" id="btnDetalhesMensagens">
+                    <i class="fas fa-info"></i>
+                </button>
             </div>
+
             <div class="card-body">
-                <canvas id="comparisonChart" height="160"></canvas>
+                <canvas id="tpMensagensChart" height="100%"></canvas>
             </div>
         </div>
     </div>
 </div>
 
-<script src="js/chart.js"></script>
+<div class="modal fade" id="modalMensagens" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-envelope"></i> Mensagens Enviadas
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <table id="tabelaMensagens" class="table table-striped table-hover w-100">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Mensagem</th>
+                            <th>Cliente</th>
+                            <th>Usuário</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -111,25 +145,54 @@
                 });
             });
 
-        // Gráfico de Comparação de tipos de cliente
-        fetch("funcoes/buscas/dados_clientes.php")
-        .then(res => res.json())
+        //Gráfico de tipos de mensagem
+        fetch("funcoes/buscas/dados_tp_mensagem.php")
+            .then(res => res.json())
             .then(data => {
-        new Chart(document.getElementById('comparisonChart'), {
-            type: 'doughnut',
-            data: {
-                labels: data.labels,
-                datasets: [{
-                        label: 'Tipo de Cliente',
-                        data: data.values,
-                        backgroundColor: ['#3498db', '#9b59b6'],
-                        fill: true
-                    }]
-            },
-            options: {
-                maintainAspectRatio: false
+                new Chart(document.getElementById('tpMensagensChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Tipos de Mensagem',
+                            data: data.values,
+                            backgroundColor: ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6'],
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    }
+                });
+            });
+    });
+
+    //TABELA DE MENSAGENS
+    $(document).ready(function () {
+        let tabelaMensagens = null;
+
+        $("#btnDetalhesMensagens").on("click", function () {
+            $("#modalMensagens").modal("show");
+
+            if (!$.fn.DataTable.isDataTable('#tabelaMensagens')) {
+                tabelaMensagens = $('#tabelaMensagens').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    order: [[4, 'desc']],
+                    pageLength: 10,
+                    ajax: {
+                        url: "funcoes/buscas/datatable_mensagens.php",
+                        type: "POST"
+                    },
+                    columns: [
+                        { data: "tipo_mensagem", title: "Tipo de Mensagem" },
+                        { data: "texto", title: "Texto" },
+                        { data: "cliente", title: "Cliente" },
+                        { data: "usuario", title: "Usuário" },
+                        { data: "data_envio", title: "Data de Envio" }
+                    ],
+                    language: { url: "js/pt-BR.json" }
+                });
             }
         });
     });
-    });
+
 </script>

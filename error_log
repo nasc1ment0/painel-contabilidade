@@ -1,6 +1,0 @@
-[13-Dec-2025 20:34:01 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Call to undefined function ds_mensagem() in /home2/henr5457/public_html/envio_email.php:61
-Stack trace:
-#0 /home2/henr5457/public_html/arquivos/upload/processa_arquivos.php(98): require()
-#1 /home2/henr5457/public_html/index.php(156): include('/home2/henr5457...')
-#2 {main}
-  thrown in /home2/henr5457/public_html/envio_email.php on line 61
