@@ -35,7 +35,17 @@ try {
     $mail->addBCC($_ENV['EMAIL_COPIA']);
     $mail->isHTML(true);
     $mail->Subject = "Novos arquivos compartilhados no painel";
-    $mail->Body = "<h4>Olá " . nm_cliente($id_cliente) . ",</h4><p>{$mensagem_email}</p>";
+    $mail->Body = "
+    <h4>Olá " . nm_cliente($id_cliente) . ",</h4>
+    <p>{$mensagem_email}</p>
+    <br>
+    <p>
+        Atenciosamente,<br>
+        <strong>Vista Consultoria Contábil</strong>
+    </p>
+    <br>
+    <img src='https://pub-649e141110e546e896141fda8574b08c.r2.dev/assinatura/assinatura.png' alt='Vista Consultoria Contábil' style='max-width:200px; height:auto;'>";
+
 
     //Inclusão dos arquivos no email
     foreach ($arquivosSalvos as $arquivo) {

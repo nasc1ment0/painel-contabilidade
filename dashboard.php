@@ -99,7 +99,7 @@
                         datasets: [{
                             label: 'Uploads',
                             data: data.values,
-                            borderColor: '#3498db',
+                            borderColor: '#094d6e',
                             backgroundColor: 'rgba(52, 152, 219, 0.1)',
                             tension: 0.4,
                             fill: true
@@ -119,7 +119,7 @@
                         datasets: [{
                             label: 'Quantidade',
                             data: data.values,
-                            backgroundColor: ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6']
+                            backgroundColor: ['#094d6e', '#80C9AE', '#E0B079', '#595959', '#0F2433']
                         }]
                     },
                     options: {
@@ -139,7 +139,7 @@
                         datasets: [{
                             label: 'Uploads por Usuário',
                             data: data.values,
-                            backgroundColor: '#3498db'
+                            backgroundColor: ['#094d6e', '#80C9AE', '#E0B079', '#595959', '#0F2433']
                         }]
                     }
                 });
@@ -156,7 +156,7 @@
                         datasets: [{
                             label: 'Tipos de Mensagem',
                             data: data.values,
-                            backgroundColor: ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6'],
+                            backgroundColor: ['#094d6e', '#80C9AE', '#E0B079', '#595959', '#0F2433'],
                             tension: 0.4,
                             fill: true
                         }]
