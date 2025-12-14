@@ -44,7 +44,7 @@ try {
         $conteudo = @file_get_contents($arquivo['caminho']);
         file_put_contents($tmp, $conteudo);
 
-        $mail->addAttachment($tmp, utf8_encode($arquivo['nome']));
+        $mail->addAttachment($tmp, utf8_decode($arquivo['nome']));
         $tmpFiles[] = $tmp;
     }
     $mail->send();
@@ -58,7 +58,7 @@ try {
     $dados["remetente"] = $_ENV['EMAIL_TESTE'];
     $dados["destinatario"] = $cliente['email'];
     $dados["tp_mensagem"] = $tp_mensagem != "" ? $tp_mensagem : 0;
-    $dados["ds_tp_mensagem"] = $tp_mensagem != "" ? utf8_encode(ds_mensagem($tp_mensagem)) : "Mensagem específica";
+    $dados["ds_tp_mensagem"] = $tp_mensagem != "" ? ds_mensagem($tp_mensagem) : "Mensagem manual";
     $dados["body_email"] = utf8_encode($mail->Body);
     $dados["id_cliente"] = $id_cliente;
     $dados["id_usuario"] = $id_usuario;
@@ -77,7 +77,7 @@ try {
     $dados["remetente"] = $_ENV['EMAIL_TESTE'];
     $dados["destinatario"] = $cliente['email'];
     $dados["tp_mensagem"] = $tp_mensagem != "" ? $tp_mensagem : 0;
-    $dados["ds_tp_mensagem"] = $tp_mensagem != "" ? utf8_encode(ds_mensagem($tp_mensagem)) : "Mensagem manual";
+    $dados["ds_tp_mensagem"] = $tp_mensagem != "" ?ds_mensagem($tp_mensagem) : "Mensagem manual";
     $dados["body_email"] = utf8_encode($mail->Body);
     $dados["id_cliente"] = $id_cliente;
     $dados["id_usuario"] = $id_usuario;

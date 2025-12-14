@@ -59,8 +59,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'caminho' => $url
             ];
 
+            $dados_log = [];
+            $dados_log["id_usuario"] = $id_usuario;
+            $dados_log["dt_log"]     = date("Y-m-d H:i:s");
+            $dados_log["tp_envio"]   = $envia_email == "T" ? "Enviado para o Email e para a Nuvem" : "Enviado apenas para a Nuvem";
+            $dados_log["id_upload"]  = $retorno;
+            $dados_log["retorno"]    = "Arquivos enviado para a nuvem com sucesso!";
+
+            $db->incluir("log_envio", $dados_log);
+
         } else {
             $uploadsErro[] = $nomeArquivo . " - Erro ao enviar para o S3";
+
+            $dados_log = [];
+            $dados_log["id_usuario"] = $id_usuario;
+            $dados_log["dt_log"]     = date("Y-m-d H:i:s");
+            $dados_log["tp_envio"]   = $envia_email == "T" ? "Enviado para o Email e para a Nuvem" : "Enviado apenas para a Nuvem";
+            $dados_log["id_upload"]  = "";
+            $dados_log["retorno"]    = "Erro ao enviar para o S3!";
+
+            $db->incluir("log_envio", $dados_log);
         }
     }
 

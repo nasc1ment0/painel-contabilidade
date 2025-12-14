@@ -3,7 +3,7 @@ $id = $_POST["id"] ?? null;
 
 $dados = [];
 
-$dados["ds_tp_mensagem"] = $_POST["ds_tp_mensagem"];
+$dados["ds_tp_mensagem"] = strtoupper($_POST["ds_tp_mensagem"]);
 $dados["texto"] = $_POST["texto"];
 $dados["id_usuario"] = $id_usuario;
 
