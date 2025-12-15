@@ -35,16 +35,17 @@ try {
     $mail->addBCC($_ENV['EMAIL_COPIA']);
     $mail->isHTML(true);
     $mail->Subject = "Novos arquivos compartilhados no painel";
+    $mail->addEmbeddedImage(__DIR__ . "/imagens/assinatura.png","assinatura_vista","assinatura.png");
     $mail->Body = "
     <h4>Olá " . nm_cliente($id_cliente) . ",</h4>
     <p>{$mensagem_email}</p>
     <br>
     <p>
-        Atenciosamente,<br>
-        <strong>Vista Consultoria Contábil</strong>
+        Atenciosamente, <br>
+        <strong>Vista Consultoria Contábil.</strong><br><br>
+        <img src='cid:assinatura_vista' alt='Vista Consultoria Contábil' size='18444' style='max-width: 500px;' data-outlook-trace='F:1|T:1'>
     </p>
-    <br>
-    <img src='https://pub-649e141110e546e896141fda8574b08c.r2.dev/assinatura/assinatura.png' alt='Vista Consultoria Contábil' style='max-width:200px; height:auto;'>";
+    ";
 
 
     //Inclusão dos arquivos no email

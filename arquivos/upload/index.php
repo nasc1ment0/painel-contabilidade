@@ -161,10 +161,6 @@
 
                 $("#modo_envio").val(result.value.modo_envio);
 
-                // futuramente você pode enviar isso também:
-                // result.value.tipo_mensagem
-                // result.value.mensagem
-
                 // LOADING
                 Swal.fire({
                     title: 'Processando...',
@@ -211,17 +207,3 @@
         })
     })
 </script>
-
-
-<?php if (isset($_SESSION['mensagem']) && $_SESSION['tipo_mensagem'] == 'success'): ?>
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Tudo certo!',
-            text: '<?php echo $_SESSION['mensagem']; ?>',
-            confirmButtonText: 'OK'
-        });
-    </script>
-    <?php
-    unset($_SESSION['mensagem'], $_SESSION['tipo_mensagem']);
-endif; ?>

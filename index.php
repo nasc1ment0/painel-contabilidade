@@ -40,12 +40,29 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Sistema</title>
     <link rel="icon" type="image/x-icon" href="imagens/icon-empresa.png">
+
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Fonte do sistema -->
+    <link href="css/fonts/font-montserrat.css" rel="stylesheet">
+
+    <!-- Estilo sistema -->
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- Datatable -->
     <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
+
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="css/bootstrap-icons.css">
+
+    <!-- SweetAlert modal -->
+    <script src="js/sweetalert.js"></script>
+ 
+    <!-- Jquery -->
     <script src="js/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -194,9 +211,6 @@ $page_title = isset($titulos[$rotina]) ? $titulos[$rotina] : 'Painel Inicial';
 
     <!-- Bootstrap modal -->
     <script src="js/bootstrap.bundle.min.js"></script>
-    
-    <!-- SweetAlert modal -->
-    <script src="js/sweetalert.js"></script>
 
     <!-- Script pro submenu -->
     <script>
