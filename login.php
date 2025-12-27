@@ -25,11 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
 
         // Consulta o usuário pelo e-mail
-        $usuario = $db->getRegistro("SELECT id_usuario, nm_usuario, nm_email, senha FROM tb_usuarios WHERE nm_email = :email LIMIT 1",[":email" => $email]);
+        $usuario = $db->getRegistro("SELECT id_usuario, nm_usuario, nm_email, senha, ativo FROM tb_usuarios WHERE nm_email = :email LIMIT 1",[":email" => $email]);
 
         if (!$usuario) {
             $errors[] = 'Usuário ou senha inválidos.';
-        } else {
+        } elseif($usuario['ativo'] == "N") {
+            $errors[] = 'Usuário Inativo.';
+        } else{
 
             if (password_verify($password, $usuario["senha"])) {
                 $_SESSION['usuario'] = [

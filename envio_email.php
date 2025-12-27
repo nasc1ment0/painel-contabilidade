@@ -47,7 +47,6 @@ try {
     </p>
     ";
 
-
     //Inclusão dos arquivos no email
     foreach ($arquivosSalvos as $arquivo) {
         //salva arquivo da nuvem temporariamente para enviar por email depois
