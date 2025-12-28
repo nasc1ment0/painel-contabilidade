@@ -39,14 +39,15 @@
 
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-header d-flex align-items-center">
                 <span>
                     <i class="fas fa-chart-simple"></i> Tipos de Mensagens Mais Enviadas
                 </span>
-
-                <button type="button" class="btn btn-sm btn-outline-primary" id="btnDetalhesMensagens">
-                    <i class="fas fa-info"></i>
-                </button>
+                <div class="ms-auto">
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="btnDetalhesMensagens">
+                        <i class="fas fa-info"></i>
+                    </button>
+                </div>
             </div>
 
             <div class="card-body">

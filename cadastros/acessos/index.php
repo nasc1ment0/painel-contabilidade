@@ -4,11 +4,14 @@ $acessos = $db->getRegistros("SELECT id_tp_acesso, ds_tp_acesso, ativo FROM tb_t
 
 ?>
 <div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="card-title mb-0">Tabela de tipos de acesso</h5>
-        <a href="index.php?rotina=1&mod=1&id=0" class="btn btn-primary btn-sm">
-            <i class="fas fa-plus"></i> Novo Tipo de Acesso
-        </a>
+    <div class="card-header d-flex align-items-center">
+        <h5 class="mb-0">Tabela de tipos de acesso</h5>
+
+        <div class="ms-auto">
+            <a href="index.php?rotina=1&mod=1" class="btn btn-primary btn-sm">
+                <i class="bi bi-plus-lg"></i> Novo Tipo de Acesso
+            </a>
+        </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">

@@ -4,110 +4,78 @@ body {
     font-weight: 300;
 }
 
-.sidebar {
-    width: 250px;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-    background: linear-gradient(to bottom, #2c3e50, #34495e);
-    padding-top: 20px;
-    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s;
-    z-index: 1000;
-}
-
-.sidebar-header {
-    padding: 0 20px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 10px;
-}
-
-.sidebar a {
-    color: #ecf0f1;
-    font-size: 15px;
-    padding: 12px 20px;
-    display: block;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-.sidebar a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-}
-
-.sidebar a i {
-    margin-right: 10px;
-    width: 20px;
-    text-align: center;
-}
-
-.sidebar .menu-item {
-    position: relative;
-}
-
-.sidebar-footer {
-    margin-top: auto;
-    padding: 15px 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.sidebar-footer .btn {
-    font-size: 14px;
-    padding: 8px 12px;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-}
-
-.sidebar-footer .btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-1px);
-}
-
-.submenu {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-.submenu.show {
-    max-height: 300px;
-}
-
-.submenu a {
-    padding-left: 50px;
-    font-size: 14px;
-    background-color: transparent;
-}
-
-.submenu a:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-.content {
-    margin-left: 250px;
-    padding: 20px;
-    transition: margin-left 0.3s;
-}
-
-.topbar {
-    background: #fff;
-    padding: 15px 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
 
 .page-title {
     color: #2c3e50;
     margin-bottom: 20px;
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
+}
+
+/* Cor fixa da sidebar */
+.main-sidebar {
+    background-color: #2c3e50 !important;
+}
+
+/* Remove qualquer gradiente interno */
+.main-sidebar * {
+    background-image: none !important;
+}
+
+/* Brand container */
+.brand-custom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 10px;
+    text-align: center;
+}
+
+/* Logo grande */
+.logo-lg {
+    width: 90px;
+    margin-bottom: 8px;
+}
+
+/* Logo pequeno */
+.logo-sm {
+    width: 32px;
+    display: none;
+}
+
+/* Texto */
+.brand-user {
+    font-size: 13px;
+    line-height: 1.3;
+    color: #cfd8dc;
+}
+
+/* ===== SIDEBAR FECHADA ===== */
+.sidebar-collapse .brand-user {
+    display: none; /* esconde "Bem-vindo" */
+}
+
+.sidebar-collapse .logo-lg {
+    display: none; /* esconde logo grande */
+}
+
+.sidebar-collapse .logo-sm {
+    display: block; /* mostra logo pequeno */
+    margin: 0 auto;
+}
+
+/* Logo */
+.brand-custom .logo {
+    width: 90px;           /* ajuste fino aqui */
+    height: auto;
+    margin-bottom: 8px;
+}
+
+/* Nome do usuário */
+.brand-user strong {
+    font-weight: 600;
+    color: #ffffff;
 }
 
 .card {
@@ -121,10 +89,19 @@ body {
     background-color: #f8f9fa;
     border-bottom: 1px solid #eee;
     font-weight: 600;
+    padding: 12px 16px; /* padrão limpo */
+    gap: 0;
 }
+
 
 .logo {
     width: 150px;
+    margin: 0 auto;
+    border-radius: 12px;
+}
+
+.logo2 {
+    width: 60px;
     margin: 0 auto;
     border-radius: 12px;
 }
@@ -142,31 +119,3 @@ body {
     padding: 0.25rem 0.5rem;
 }
 
-@media (max-width: 768px) {
-    .sidebar {
-        width: 70px;
-        overflow: hidden;
-    }
-
-    .sidebar .menu-text,
-    .sidebar-header h4 {
-        display: none;
-    }
-
-    .sidebar .menu-item.has-submenu::after {
-        display: none;
-    }
-
-    .sidebar a i {
-        margin-right: 0;
-        font-size: 18px;
-    }
-
-    .content {
-        margin-left: 70px;
-    }
-
-    .submenu a {
-        padding-left: 20px;
-    }
-}
